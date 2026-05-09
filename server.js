@@ -1,19 +1,23 @@
+require("dotenv").config();
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
 const app = express();
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 
 console.log("Starting server...");
 
-mongoose.connect("mongodb+srv://vipinkuswahah:vipin123@chatapp.o2z9nli.mongodb.net/inventory")
+// MongoDB Connection
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected ✅"))
-  .catch(err => console.log(err));
+  .catch(err => console.log("MongoDB Error:", err));
 
-// Test route
+// Test Route
 app.get("/", (req, res) => {
   res.send("Server is working ✅");
 });
@@ -22,6 +26,9 @@ app.get("/", (req, res) => {
 app.use("/api/products", require("./routes/productRoutes"));
 app.use("/api/logs", require("./routes/logRoutes"));
 
-app.listen(5001, () => {
-  console.log("Server running on http://localhost:5001");
+// Render Port
+const PORT = process.env.PORT || 5001;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
