@@ -1,19 +1,35 @@
-// const mongoose = require("mongoose");
-
-// const productSchema = new mongoose.Schema({
-//   name: String,
-//   totalAdded: Number,
-//   category: String, // ✅ NEW
-// });
-
-// module.exports = mongoose.model("Product", productSchema);
-
 const mongoose = require("mongoose");
 
-const productSchema = new mongoose.Schema({
-  name: String,
-  totalAdded: Number,
-  category: String,
-});
+const productSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
 
-module.exports = mongoose.model("Product", productSchema);
+    totalAdded: {
+      type: Number,
+      default: 0,
+    },
+
+    // LAST UPDATED AMOUNT
+    lastAddedAmount: {
+      type: Number,
+      default: 0,
+    },
+
+    category: {
+      type: String,
+      default: "Other",
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+module.exports = mongoose.model(
+  "Product",
+  productSchema
+);
