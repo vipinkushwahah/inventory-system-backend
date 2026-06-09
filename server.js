@@ -27,6 +27,15 @@ app.use("/api/products", require("./routes/productRoutes"));
 app.use("/api/logs", require("./routes/logRoutes"));
 
 // Render Port
+
+// HEALTH CHECK ROUTE
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    uptime: process.uptime(),
+  });
+});
+
 const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => {
